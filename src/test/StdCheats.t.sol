@@ -33,28 +33,28 @@ contract StdCheatsTest is Test {
         test.sender(address(1337));
     }
 
-    function testHoaxCustomBalance() public {
+    function testHoax_CustomBalance() public {
         hoax(address(1337), 123 ether);
 
         assertEq(address(1337).balance, 123 ether);
         test.sender(address(1337));
     }
 
-    function testHoaxOrigin() public {
+    function testHoax_Origin() public {
         hoax(address(1337), address(1337));
 
         assertEq(address(1337).balance, 1 << 128);
         test.origin(address(1337));
     }
 
-    function testHoaxOriginCustomBalance() public {
+    function testHoax_Origin_CustomBalance() public {
         hoax(address(1337), address(1337), 123 ether);
 
         assertEq(address(1337).balance, 123 ether);
         test.origin(address(1337));
     }
 
-    function testHoaxDifferentAddresses() public {
+    function testHoax_DifferentAddresses() public {
         hoax(address(1337), address(7331));
 
         test.origin(address(1337), address(7331));
@@ -70,7 +70,7 @@ contract StdCheatsTest is Test {
         test.sender(address(this));
     }
 
-    function testStartHoaxCustomBalance() public {
+    function testStartHoax_CustomBalance() public {
         startHoax(address(1337), 123 ether);
 
         assertEq(address(1337).balance, 123 ether);
@@ -80,7 +80,7 @@ contract StdCheatsTest is Test {
         test.sender(address(this));
     }
 
-    function testStartHoaxOrigin() public {
+    function testStartHoax_Origin() public {
         startHoax(address(1337), address(1337));
 
         assertEq(address(1337).balance, 1 << 128);
@@ -90,7 +90,7 @@ contract StdCheatsTest is Test {
         test.sender(address(this));
     }
 
-    function testStartHoaxOriginCustomBalance() public {
+    function testStartHoax_Origin_CustomBalance() public {
         startHoax(address(1337), address(1337), 123 ether);
 
         assertEq(address(1337).balance, 123 ether);
@@ -117,7 +117,7 @@ contract StdCheatsTest is Test {
         assertEq(address(1337).balance, 123 ether);
     }
 
-    function testDealToken() public {
+    function testDeal_Token() public {
         Contract token = new Contract();
         uint256 totalSupply = token.totalSupply();
 
@@ -127,7 +127,7 @@ contract StdCheatsTest is Test {
         assertEq(token.totalSupply(), totalSupply);
     }
 
-    function testDealTokenAdjustAdd() public {
+    function testDeal_Token_Adjust_Add() public {
         Contract token = new Contract();
         uint256 prevTotalSupply = token.totalSupply();
 
@@ -137,7 +137,7 @@ contract StdCheatsTest is Test {
         assertEq(token.totalSupply(), prevTotalSupply + 123e18);
     }
 
-    function testDealTokenAdjustSub() public {
+    function testDeal_Token_Adjust_Sub() public {
         Contract token = new Contract();
         uint256 prevTotalSupply = token.totalSupply();
 
@@ -157,7 +157,7 @@ contract StdCheatsTest is Test {
         assertEq(bound(9999, 1337, 6666), 6006);
     }
 
-    function testBoundUint256Max() public {
+    function testBound_Uint256Max() public {
         assertEq(bound(0, type(uint256).max - 6, type(uint256).max), type(uint256).max - 6);
         assertEq(bound(6, type(uint256).max - 6, type(uint256).max), type(uint256).max);
     }
@@ -175,13 +175,13 @@ contract StdCheatsTest is Test {
         assertLe(result, max);
     }
 
-    function testCannotBoundMaxLessThanMin() public {
+    function testBound_Fail() public {
         vm.expectRevert(bytes("Test bound(uint256,uint256,uint256): Max is less than min."));
         
         bound(0, 1, 0);
     }
 
-    function testCannotBoundMaxLessThanMin(
+    function test_Bound_Fail(
         uint256 num,
         uint256 min,
         uint256 max
@@ -200,13 +200,13 @@ contract StdCheatsTest is Test {
         assertEq(ContractWithArgs(deployedAt).arg(), 123e18);
     }
 
-    function testDeployCodeNoArgs() public {
+    function testDeployCode_NoArgs() public {
         address deployed = deployCode("StdCheats.t.sol:StdCheatsTest");
-        
+
         assertEq(string(getCode(deployed)), string(getCode(address(this))));
     }
 
-    function testCannotDeployCode() public {
+    function test_DeployCode_Fail() public {
         vm.expectRevert(bytes("Test deployCode(string): Deployment failed."));
         
         this.deployCode("StdCheats.t.sol:RevertingContract");
