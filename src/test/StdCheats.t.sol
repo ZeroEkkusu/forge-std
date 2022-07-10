@@ -197,7 +197,7 @@ contract StdCheatsTest is Test {
         bound(0, 1, 0);
     }
 
-    function test_Bound_Fail(
+    function testBound_Fail(
         uint256 num,
         uint256 min,
         uint256 max
@@ -222,7 +222,7 @@ contract StdCheatsTest is Test {
         assertEq(string(getCode(deployed)), string(getCode(address(this))));
     }
 
-    function test_DeployCode_Fail() public {
+    function testDeployCode_Fail() public {
         vm.expectRevert(bytes("Test deployCode(string): Deployment failed."));
         this.deployCode("StdCheats.t.sol:RevertingContract");
     }
