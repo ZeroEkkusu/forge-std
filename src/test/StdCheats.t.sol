@@ -177,7 +177,6 @@ contract StdCheatsTest is Test {
 
     function testBound_Fail() public {
         vm.expectRevert(bytes("Test bound(uint256,uint256,uint256): Max is less than min."));
-        
         bound(0, 1, 0);
     }
 
@@ -188,8 +187,8 @@ contract StdCheatsTest is Test {
     ) public {
         vm.assume(min != max);
         if (min < max) (min, max) = (max, min);
+
         vm.expectRevert(bytes("Test bound(uint256,uint256,uint256): Max is less than min."));
-        
         bound(num, min, max);
     }
 
@@ -208,7 +207,6 @@ contract StdCheatsTest is Test {
 
     function test_DeployCode_Fail() public {
         vm.expectRevert(bytes("Test deployCode(string): Deployment failed."));
-        
         this.deployCode("StdCheats.t.sol:RevertingContract");
     }
 
