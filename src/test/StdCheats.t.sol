@@ -149,11 +149,28 @@ contract StdCheatsTest is Test {
     }
 
     function testBound() public {
+        vm.expectEmit(false, false, false, true);
+        emit log_named_uint("Bound Result", 0);
         assertEq(bound(5, 0, 4), 0);
+
+        vm.expectEmit(false, false, false, true);
+        emit log_named_uint("Bound Result", 69);
         assertEq(bound(0, 69, 69), 69);
+
+        vm.expectEmit(false, false, false, true);
+        emit log_named_uint("Bound Result", 68);
         assertEq(bound(0, 68, 69), 68);
+
+        vm.expectEmit(false, false, false, true);
+        emit log_named_uint("Bound Result", 160);
         assertEq(bound(10, 150, 190), 160);
+
+        vm.expectEmit(false, false, false, true);
+        emit log_named_uint("Bound Result", 3100);
         assertEq(bound(300, 2800, 3200), 3100);
+        
+        vm.expectEmit(false, false, false, true);
+        emit log_named_uint("Bound Result", 6006);
         assertEq(bound(9999, 1337, 6666), 6006);
     }
 
